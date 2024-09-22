@@ -1,27 +1,78 @@
-import {Text, TouchableOpacity} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useSharedValue} from 'react-native-reanimated';
+import {
+  Dimensions,
+  Text,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+} from 'react-native';
+import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
+import Icon from 'react-native-vector-icons/Feather';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/native';
+import {useAppStore} from '../Stores/InstalledAppsStore';
 
-const SearchBar = () => {
-  const animVal = useSharedValue(0);
+type SearchBarProps = {
+  showSearch?: boolean;
+  openSearch?: boolean;
+};
+
+const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
+  const navigation = useNavigation();
+  const {width} = Dimensions.get('screen');
+
+  const InpRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (openSearch)
+      setTimeout(() => {
+        InpRef.current?.focus();
+      }, 200);
+  }, []);
+
+  const search = useAppStore(state => state.searchApp);
+  const setSearch = useAppStore(state => state.setSearch);
 
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      onPress={() => {
+        if (!showSearch) (navigation.navigate as any)('Search', {search: true});
+      }}
+      activeOpacity={showSearch ? 1 : 0.5}
       style={{
-        position: 'absolute',
+        position: showSearch ? 'relative' : 'absolute',
         flexDirection: 'row',
         backgroundColor: '#80808080',
         paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 30,
-        bottom: 20,
+        paddingVertical: showSearch ? 0 : 6,
+        borderRadius: showSearch ? 10 : 30,
+        bottom: showSearch ? 'auto' : 20,
+        right: showSearch ? 'auto' : 20,
         gap: 5,
-        alignSelf: 'center',
+        alignSelf: showSearch ? 'flex-start' : 'center',
+        alignItems: 'center',
       }}>
-      <Icon name="search" size={20} color={'white'} />
-      <Text style={{color: 'white'}}>Search</Text>
+      <Icon name="search" size={showSearch ? 20 : 16} color={'white'} />
+      {showSearch ? (
+        <TextInput
+          value={search}
+          onChangeText={setSearch}
+          ref={InpRef}
+          placeholder="Search"
+          placeholderTextColor={'#f0f0f0'}
+          style={{
+            color: 'white',
+            fontSize: 16,
+            flex: 1,
+          }}
+        />
+      ) : (
+        <Text style={{color: 'white'}}>Search</Text>
+      )}
     </TouchableOpacity>
   );
 };

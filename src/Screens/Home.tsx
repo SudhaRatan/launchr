@@ -3,10 +3,14 @@ import React, {useEffect, useState} from 'react';
 import {InstalledApps, RNLauncherKitHelper} from 'react-native-launcher-kit';
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AppList from '../Components/AppList';
+import {RootStackParamList} from '../../App';
+import {NativeStackScreenProps} from 'react-native-screens/lib/typescript/native-stack/types';
 import SearchBar from '../Components/SearchBar';
+import AllApps from '../Components/AllApps';
 
-const Home = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+const Home = ({navigation}: Props) => {
   const [apps, setApps] = useState<AppDetail[]>();
 
   const GetInstalledApps = () => {
@@ -31,12 +35,10 @@ const Home = () => {
         }}>
         <Text style={{fontWeight: 600, fontSize: 24}}>Home</Text>
         <TouchableOpacity onPress={openSettings}>
-          <Icon name="settings" size={28} />
+          <Icon name="settings" size={24} />
         </TouchableOpacity>
       </View>
-
-      {/* <AppList apps={apps} /> */}
-
+      <AllApps />
       <SearchBar />
     </View>
   );
