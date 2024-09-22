@@ -68,7 +68,7 @@ const AppList = ({apps}: AppListType) => {
           <Pressable
             onPress={() => lauchApp(packageName)}
             onLongPress={() => {
-              openAppInfo();
+              openAppInfo(packageName);
             }}
             android_ripple={{borderless: false}}
             style={{
