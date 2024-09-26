@@ -25,6 +25,8 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
   const navigation = useNavigation();
   const {width} = Dimensions.get('screen');
 
+  const fetchApps = useAppStore(state => state.fetchApps);
+
   const InpRef = useRef<TextInput>(null);
 
   useEffect(() => {
@@ -40,7 +42,10 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        if (!showSearch) (navigation.navigate as any)('Search', {search: true});
+        if (!showSearch) {
+          (navigation.navigate as any)('Search', {search: true});
+          fetchApps();
+        }
       }}
       activeOpacity={showSearch ? 1 : 0.5}
       style={{
@@ -51,7 +56,6 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
         paddingVertical: showSearch ? 0 : 6,
         borderRadius: showSearch ? 10 : 30,
         bottom: showSearch ? 'auto' : 20,
-        right: showSearch ? 'auto' : 20,
         gap: 5,
         alignSelf: showSearch ? 'flex-start' : 'center',
         alignItems: 'center',

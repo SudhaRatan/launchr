@@ -6,6 +6,7 @@ import {
   View,
   Platform,
   Linking,
+  NativeModules,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {RNLauncherKitHelper} from 'react-native-launcher-kit';
@@ -14,6 +15,7 @@ import {useAppStore} from '../Stores/InstalledAppsStore';
 import {Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AndroidOpenSettings from 'react-native-android-open-settings';
+import AppInfoLauncher from '../Utils/AppInfoLauncher';
 
 type AppListType = {
   apps: AppDetail[] | undefined;
@@ -21,6 +23,7 @@ type AppListType = {
 
 const AppList = ({apps}: AppListType) => {
   const setSearch = useAppStore(state => state.setSearch);
+  const fetchApps = useAppStore(state => state.fetchApps);
   const navigation = useNavigation();
 
   const lauchApp = (packageName: string) => {
@@ -28,28 +31,19 @@ const AppList = ({apps}: AppListType) => {
     RNLauncherKitHelper.checkIfPackageInstalled(packageName).then(
       isInstalled => {
         if (isInstalled) RNLauncherKitHelper.launchApplication(packageName);
+        else fetchApps();
       },
     );
   };
 
   const openAppInfo = (packageName: string) => {
-    // Linking.sendIntent('android.settings.APPLICATION_DETAILS_SETTINGS', [
-    //   {
-    //     key: 'android.provider.extra.APP_PACKAGE',
-    //     value: packageName,
-    //   },
-    // ]).catch(err => console.error('Could not open app settings', err));
-    // Linking.openURL(`android-app://${packageName}`);
-    const intent = 'android.settings.APPLICATION_DETAILS_SETTINGS';
-    const uri = `package:${packageName}`;
-    Linking.sendIntent(intent);
+    AppInfoLauncher.launch(packageName);
   };
 
   useEffect(() => {
     if (apps?.length === 1) {
       setSearch('');
       Keyboard.dismiss();
-      // navigation.goBack();
       RNLauncherKitHelper.launchApplication(apps[0].packageName);
     }
   }, [apps]);

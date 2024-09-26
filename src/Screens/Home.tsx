@@ -18,7 +18,8 @@ const Home = ({navigation}: Props) => {
   };
 
   const openSettings = () => {
-    RNLauncherKitHelper.goToSettings();
+    // RNLauncherKitHelper.goToSettings();
+    (navigation.navigate as any)('Settings');
   };
 
   useEffect(() => {
@@ -33,12 +34,25 @@ const Home = ({navigation}: Props) => {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-        <Text style={{fontWeight: 600, fontSize: 24}}>Home</Text>
-        <TouchableOpacity onPress={openSettings}>
-          <Icon name="settings" size={24} />
+        <Text
+          style={{
+            fontWeight: 600,
+            fontSize: 24,
+            backgroundColor: '#80808080',
+            color: 'white',
+            paddingVertical: 2,
+            paddingHorizontal: 20,
+            borderRadius: 20,
+          }}>
+          Home
+        </Text>
+        <TouchableOpacity
+          style={{padding: 5, backgroundColor: '#80808080', borderRadius: 20}}
+          onPress={openSettings}>
+          <Icon name="settings" color={'white'} size={24} />
         </TouchableOpacity>
       </View>
-      <AllApps />
+      {/* <AllApps /> */}
       <SearchBar />
     </View>
   );

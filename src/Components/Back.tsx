@@ -26,8 +26,8 @@ const Back = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Icon name="arrow-back-ios" size={14} />
-      <Text style={{fontWeight: 600, fontSize: 16}}>HOME</Text>
+      <Icon name="arrow-back-ios" size={14} color={'white'} />
+      <Text style={{fontWeight: 600, fontSize: 16, color: 'white'}}>HOME</Text>
     </TouchableOpacity>
   );
 };

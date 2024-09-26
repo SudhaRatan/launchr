@@ -16,7 +16,7 @@ const AllApps = () => {
         position: 'absolute',
         borderRadius: 10,
       }}>
-      <Icon2 name="apps" size={40} />
+      <Icon2 name="apps" color={'white'} size={40} />
     </TouchableOpacity>
   );
 };
