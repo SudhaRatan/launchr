@@ -22,7 +22,7 @@ const Search = ({navigation, route: {params}}: Props) => {
     <View style={{flex: 1, paddingHorizontal: 20, gap: 10}}>
       <SearchBar showSearch openSearch={params.search} />
       <AppList
-        apps={apps.filter(i =>
+        apps={apps?.filter(i =>
           i.label.toLowerCase().includes(searchApp.toLowerCase()),
         )}
       />

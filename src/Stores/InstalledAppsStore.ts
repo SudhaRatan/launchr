@@ -1,6 +1,7 @@
 import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/InstalledApps';
 import {create} from 'zustand';
 import {InstalledApps} from 'react-native-launcher-kit';
+import AppInfoLauncher from '../Utils/AppInfoLauncher';
 
 interface AppStore {
   apps: AppDetail[];
@@ -18,8 +19,18 @@ export const useAppStore = create<AppStore>(set => ({
   fetchApps: () => {
     set({loading: true, error: null});
     try {
-      const apps = InstalledApps.getSortedApps();
-      set({apps, loading: false});
+      AppInfoLauncher.getApps()
+        .then(apps => {
+          var ap = JSON.parse(apps) as AppDetail[];
+          const appss = ap.sort((a, b) =>
+            a.label?.toLowerCase().localeCompare(b.label?.toLowerCase()),
+          );
+          set({apps: appss, loading: false});
+        })
+        .catch(e => {
+          console.error(e);
+          set({error: (e as Error).message, loading: false});
+        });
     } catch (error) {
       set({error: (error as Error).message, loading: false});
     }

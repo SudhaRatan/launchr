@@ -5,14 +5,8 @@ import {
   TextInputProps,
   TouchableOpacity,
 } from 'react-native';
-import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
 import {useAppStore} from '../Stores/InstalledAppsStore';
 
@@ -44,7 +38,6 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
       onPress={() => {
         if (!showSearch) {
           (navigation.navigate as any)('Search', {search: true});
-          fetchApps();
         }
       }}
       activeOpacity={showSearch ? 1 : 0.5}
@@ -75,7 +68,7 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
           }}
         />
       ) : (
-        <Text style={{color: 'white'}}>Search</Text>
+        <Text style={{color: 'white', fontSize: 14}}>Search</Text>
       )}
     </TouchableOpacity>
   );
