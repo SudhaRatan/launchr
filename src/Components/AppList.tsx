@@ -5,7 +5,6 @@ import {AppDetail} from 'react-native-launcher-kit/typescript/Interfaces/Install
 import {useAppStore} from '../Stores/InstalledAppsStore';
 import {Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import AndroidOpenSettings from 'react-native-android-open-settings';
 import AppInfoLauncher from '../Utils/AppInfoLauncher';
 import AppComponent from './AppComponent';
 import {lauchApp} from '../Utils/AppFunctions';
