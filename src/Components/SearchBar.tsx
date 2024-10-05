@@ -19,8 +19,6 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
   const navigation = useNavigation();
   const {width} = Dimensions.get('screen');
 
-  const fetchApps = useAppStore(state => state.fetchApps);
-
   const InpRef = useRef<TextInput>(null);
 
   useEffect(() => {
@@ -42,13 +40,12 @@ const SearchBar = ({showSearch, openSearch}: SearchBarProps) => {
       }}
       activeOpacity={showSearch ? 1 : 0.5}
       style={{
-        position: showSearch ? 'relative' : 'absolute',
+        // position: showSearch ? 'relative' : 'absolute',
         flexDirection: 'row',
         backgroundColor: '#80808080',
         paddingHorizontal: 10,
         paddingVertical: showSearch ? 0 : 6,
         borderRadius: showSearch ? 10 : 30,
-        bottom: showSearch ? 'auto' : 20,
         gap: 5,
         alignSelf: showSearch ? 'flex-start' : 'center',
         alignItems: 'center',

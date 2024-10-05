@@ -144,8 +144,8 @@ const Home = ({navigation}: Props) => {
         {
           translateY: interpolate(
             swipeUpAnim.value,
-            [0, -100],
-            [0, -40],
+            [0, -150],
+            [0, -25],
             Extrapolation.CLAMP,
           ),
         },
@@ -184,46 +184,44 @@ const Home = ({navigation}: Props) => {
           <View style={{flex: 1}}>
             <Clock />
           </View>
-          <ScrollView
-            contentContainerStyle={{gap: 10}}
-            style={{maxHeight: height / 2}}>
-            {favouriteApps?.length > 0 ? (
-              favouriteApps.map((item, index) => {
-                const app = appss.find(i => i.packageName == item)!;
-                if (app == null || app == undefined) {
-                  return null;
-                }
-                return (
-                  <AppComponent
-                    icon={app.icon}
-                    index={index}
-                    label={app.label}
-                    direction={'row'}
-                    key={app.packageName}
-                    marginCondition={0}
-                    lastIndex={favouriteApps.length - 1}
-                    onPress={() => {
-                      lauchApp(app.packageName);
-                    }}
-                    textLines={1}
-                  />
-                );
-              })
-            ) : (
-              <Text style={[baseStyles.textPrimary, {textAlign: 'center'}]}>
-                Add your favourite apps from settings
-              </Text>
-            )}
-          </ScrollView>
-          <View style={{flex: 1}}></View>
+          <View style={{flex: 2.5}}>
+            <ScrollView
+              contentContainerStyle={{gap: 10}}
+              style={{flex: 1}}
+              showsVerticalScrollIndicator={false}>
+              {favouriteApps?.length > 0 ? (
+                favouriteApps.map((item, index) => {
+                  const app = appss.find(i => i.packageName == item)!;
+                  if (app == null || app == undefined) {
+                    return null;
+                  }
+                  return (
+                    <AppComponent
+                      icon={app.icon}
+                      index={index}
+                      label={app.label}
+                      direction={'row'}
+                      key={app.packageName}
+                      marginCondition={0}
+                      lastIndex={favouriteApps.length - 1}
+                      onPress={() => {
+                        lauchApp(app.packageName);
+                      }}
+                      textLines={1}
+                    />
+                  );
+                })
+              ) : (
+                <Text style={[baseStyles.textPrimary, {textAlign: 'center'}]}>
+                  Add your favourite apps from settings
+                </Text>
+              )}
+            </ScrollView>
+          </View>
           <SearchBar />
-          <Animated.View
-            style={[
-              {position: 'absolute', bottom: 50, alignSelf: 'center'},
-              swipeUpStyle,
-            ]}>
+          <Animated.View style={[{alignSelf: 'center'}, swipeUpStyle]}>
             <Icon2
-              size={30}
+              size={24}
               style={{fontWeight: 'bold'}}
               name="chevron-up"
               color={'#808080'}

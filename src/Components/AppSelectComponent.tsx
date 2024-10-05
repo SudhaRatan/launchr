@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ToastAndroid, View} from 'react-native';
 import React, {useState} from 'react';
 import AppComponent from './AppComponent';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -42,8 +42,15 @@ const AppSelectComponent = ({
         index={index}
         label={label}
         onPress={() => {
-          setChecked(!checked);
-          onPress();
+          if (favApps.length < 5 || checked) {
+            setChecked(!checked);
+            onPress();
+          } else {
+            ToastAndroid.show(
+              'Cannot add more than 5 apps',
+              ToastAndroid.SHORT,
+            );
+          }
         }}
         onLongPress={() => {}}
         lastIndex={length! - 1}
